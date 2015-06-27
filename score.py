@@ -1,5 +1,6 @@
 import argparse
-from collections import Counter
+import bisect
+from collections import Counter, OrderedDict
 import logging
 
 
@@ -13,12 +14,12 @@ EVENTS = {
     'webinar': 2.0,
 }
 
-RATINGS = (
-    (25, 'bronze'),
-    (50, 'silver'),
-    (75, 'gold'),
-    (100, 'platinum'),
-)
+SCALE = OrderedDict({
+    25: 'bronze',
+    50: 'silver',
+    75: 'gold',
+    100: 'platinum',
+})
 
 
 def score_reader(line):
@@ -55,12 +56,12 @@ def read_records(filepath, line_reader=None):
 
 def normalize(score, top, bottom):
     normalized_score = (score - bottom) / (top - bottom) * 100
+    position = bisect.bisect_right(SCALE.keys(), normalized_score)
 
-    for rating_top_score, rating_name in RATINGS:
-        if normalized_score < rating_top_score:
-            break
+    if position == len(SCALE):
+        return SCALE[next(reversed(SCALE))], round(normalized_score)
 
-    return rating_name, round(normalized_score)
+    return SCALE.values()[position], round(normalized_score)
 
 
 def calculate_score(filepath):
