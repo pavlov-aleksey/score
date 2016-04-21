@@ -7,8 +7,11 @@ argument the path to a csv file. The csv file is expected to have the following
 field layout:
 
 contact id - integer
+
 event - string of values {web, email, social, webinar}
+
 score - a rational number with up to 2 digits after the decimal
+
 
 Example:
 1, web, 34.33
