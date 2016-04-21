@@ -11,11 +11,11 @@ field layout:
 
 
 Example:
-1, web, 34.33
-1, email, 3.4
-1, social, 4
-2, webinar, 55.4
-2, social, 15
+- 1, web, 34.33
+- 1, email, 3.4
+- 1, social, 4
+- 2, webinar, 55.4
+- 2, social, 15
 
 There will be many events per contact but only one event will be represented
 per row in the file.
